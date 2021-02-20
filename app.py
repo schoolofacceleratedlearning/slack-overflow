@@ -6,12 +6,12 @@ from flask import Flask, request, Response, redirect
 from stackexchange import Site, StackOverflow, Sort, DESC
 
 
-se_key = os.environ.get('SE_KEY')
+se_key = os.environ.get('SE_KEY', None)
 
 
 if not se_key:
     import sys
-    print 'No config.py file found. Exiting...'
+    print('No config.py file found. Exiting...')
     sys.exit(0)
 
 
