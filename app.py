@@ -59,7 +59,7 @@ def overflow():
 
 @app.route('/')
 def hello():
-    return redirect('https://github.com/')
+    return 'Hello World!'
 
 
 if __name__ == '__main__':
