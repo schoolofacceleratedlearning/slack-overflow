@@ -60,7 +60,7 @@ def overflow():
 
 
 @app.route('/question', methods=['post'])
-def overflow():
+def questions():
     '''
     Example:
         /overflow python list comprehension
