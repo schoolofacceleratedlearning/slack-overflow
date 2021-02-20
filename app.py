@@ -54,6 +54,7 @@ def overflow():
                         'search directly on '
                         '<https://stackoverflow.com|StackOverflow>.'))
 
+    print('\n'.join(resp_qs))
     return jsonify({"response_type": "in_channel", "text": '\n'.join(resp_qs)})
 
 
