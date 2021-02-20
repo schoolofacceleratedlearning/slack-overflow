@@ -54,12 +54,37 @@ def overflow():
                         'search directly on '
                         '<https://stackoverflow.com|StackOverflow>.'))
 
-    response = '\n'.join(resp_qs)
+    
+    return Response('\n'.join(resp_qs),
+                    content_type='text/plain; charset=utf-8')
+
+
+@app.route('/question', methods=['post'])
+def overflow():
+    '''
+    Example:
+        /overflow python list comprehension
+    '''
+    text = request.values.get('text')
+
     try:
-        return {"response_type": "in_channel", "text": response}
-    except Exception as err:
-        print(err)
-        return 'Unable to get response'
+        qs = so.search(intitle=text, sort=Sort.Votes, order=DESC)
+    except UnicodeEncodeError:
+        return Response(('Only English language is supported. '
+                         '%s is not valid input.' % text),
+                         content_type='text/plain; charset=utf-8')
+
+
+    resp_qs = ['Stack Overflow Top Questions for "%s"\n' % text]
+    resp_qs.extend(map(get_response_string, qs[:MAX_QUESTIONS]))
+
+    if len(resp_qs) is 1:
+        resp_qs.append(('No questions found. Please try a broader search or '
+                        'search directly on '
+                        '<https://stackoverflow.com|StackOverflow>.'))
+
+    
+    return {"response_type": "in_channel", 'text': '\n'.join(resp_qs)}
     
 
 
