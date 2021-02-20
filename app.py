@@ -5,11 +5,8 @@ import os
 from flask import Flask, request, Response, redirect
 from stackexchange import Site, StackOverflow, Sort, DESC
 
-try:
-    import config
-    se_key = config.stackexchange['api_key']
-except:
-    se_key = os.environ.get('SE_KEY')
+
+se_key = os.environ.get('SE_KEY')
 
 
 if not se_key:
