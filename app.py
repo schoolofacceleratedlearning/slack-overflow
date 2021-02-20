@@ -54,8 +54,13 @@ def overflow():
                         'search directly on '
                         '<https://stackoverflow.com|StackOverflow>.'))
 
-    print('\n'.join(resp_qs))
-    return jsonify({"response_type": "in_channel", "text": '\n'.join(resp_qs)})
+    response = '\n'.join(resp_qs)
+    try:
+        return {"response_type": "in_channel", "text": response}
+    except Exception as err:
+        print(err)
+        return 'Unable to get response'
+    
 
 
 @app.route('/')
