@@ -4,6 +4,7 @@ import os
 
 from flask import Flask, request, Response, redirect
 from stackexchange import Site, StackOverflow, Sort, DESC
+from flask import jsonify
 
 
 se_key = os.environ.get('SE_KEY', None)
@@ -53,8 +54,7 @@ def overflow():
                         'search directly on '
                         '<https://stackoverflow.com|StackOverflow>.'))
 
-    return Response('\n'.join(resp_qs),
-                    content_type='text/plain; charset=utf-8')
+    return jsonify({"response_type": "in_channel", "text": '\n'.join(resp_qs)})
 
 
 @app.route('/')
