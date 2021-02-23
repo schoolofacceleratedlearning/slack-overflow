@@ -65,7 +65,7 @@ def questions():
     Example:
         /overflow python list comprehension
     '''
-    text = request.json.get('text', None)
+    text = request.values.get('text')
 
     try:
         qs = so.search(intitle=text, sort=Sort.Votes, order=DESC)
