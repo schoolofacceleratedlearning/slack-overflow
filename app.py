@@ -83,9 +83,12 @@ def questions():
                         '<https://stackoverflow.com|StackOverflow>.'))
     answers = "\n".join(resp_qs)
     response = {"response_type": "in_channel", "text": answers }
-    return response
+    try:
+        return jsonify(response)
+    except Exception as e:
+        print(e)
+        return Response('\n'.join(resp_qs), content_type='text/plain; charset=utf-8')
     
-
 
 @app.route('/')
 def hello():
