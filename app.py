@@ -65,7 +65,7 @@ def questions():
     Example:
         /overflow python list comprehension
     '''
-    text = request.values.get('text')
+    text = request.json.get('text', None)
 
     try:
         qs = so.search(intitle=text, sort=Sort.Votes, order=DESC)
@@ -77,14 +77,13 @@ def questions():
 
     resp_qs = ['Stack Overflow Top Questions for "%s"\n' % text]
     resp_qs.extend(map(get_response_string, qs[:MAX_QUESTIONS]))
-
     if len(resp_qs) is 1:
         resp_qs.append(('No questions found. Please try a broader search or '
                         'search directly on '
                         '<https://stackoverflow.com|StackOverflow>.'))
-
-    
-    return {"response_type": "in_channel", 'text': '\n'.join(resp_qs)}
+    answers = "\n".join(resp_qs)
+    response = {"response_type": "in_channel", "text": answers }
+    return response
     
 
 
